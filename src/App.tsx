@@ -2,6 +2,35 @@ import './App.css'
 
 import bgVideo from './assets/jubackground.mov'
 
+import Icon from './components/Icon'
+import FacebookIcon from './assets/facebook.svg?react'
+import InstagramIcon from './assets/instagram.svg?react'
+import SpotifyIcon from './assets/spotify.svg?react'
+import YouTubeIcon from './assets/youtube.svg?react'
+
+const socialLinks = [
+  {
+    href: 'https://www.facebook.com/johnnyutahband',
+    icon: FacebookIcon,
+    label: 'Facebook',
+  },
+  {
+    href: 'https://www.instagram.com/johnnyutahband',
+    icon: InstagramIcon,
+    label: 'Instagram',
+  },
+  {
+    href: 'https://open.spotify.com/artist/3UMwzIY5BTbaL0x2RZ5Ukh',
+    icon: SpotifyIcon,
+    label: 'Spotify',
+  },
+  {
+    href: 'https://www.youtube.com/@johnnyutah8544',
+    icon: YouTubeIcon,
+    label: 'YouTube',
+  },
+];
+
 function App() {
   return (
     <>
@@ -22,6 +51,21 @@ function App() {
               <li><a href="#contact">Contact</a></li>
             </ul>
           </nav>
+          <ul className="social-links" role="list">
+            {socialLinks.map(({ href, icon, label }) => (
+              <li key={label}>
+                <a
+                  aria-label={`Visit us on ${label}`}
+                  className="social-link"
+                  href={href}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <Icon icon={icon} />
+                </a>
+              </li>
+            ))}
+          </ul>
           <p>New album out now!</p>
         </div>
       </section>
