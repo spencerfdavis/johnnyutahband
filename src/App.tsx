@@ -1,33 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+import bgVideo from './assets/jubackground.mov'
 
+function App() {
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <section id="home" className="hero">
+        <video autoPlay muted loop playsInline className="bg-video">
+          <source src={bgVideo} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div className="content">
+          <h1 className="title">Johnny Utah</h1>
+          <nav className="main-nav">
+            <ul>
+              <li><a href="#home">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#music">Music</a></li>
+              <li><a href="#events">Events</a></li>
+              <li><a href="#videos">Videos</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </nav>
+          <p>New album out now!</p>
+        </div>
+      </section>
+      <section id="about"> ... </section>
+      <section id="music"> ... </section>
+      <section id="events"> ... </section>
+      <section id="videos"> ... </section>
+      <section id="contact"> ... </section>
+
+      <section className="more-content">
+        <p>Here's the rest of the site...</p>
+      </section>
     </>
   )
 }
