@@ -1,11 +1,4 @@
-@font-face {
-  font-family: "JohnnyUtah";
-  src: url("./assets/jufont.woff2") format("woff2");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
+/* Animations */
 @keyframes fadeSlideUp {
   from {
     opacity: 0;
@@ -17,21 +10,25 @@
   }
 }
 
+/* ----------------------------------------
+   Hero Section
+---------------------------------------- */
 .hero {
   position: relative;
   height: 100vh;
+  color: #fff;
   overflow: hidden;
 }
 
 .bg-video {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+/* Hero */
 .content {
   position: relative;
   z-index: 1;
@@ -49,25 +46,24 @@
   font-family: "JohnnyUtah", sans-serif;
   font-size: 6rem;
   letter-spacing: 0.05em;
-
   opacity: 0;
   transform: translateY(40px);
   animation: fadeSlideUp 1s ease-out forwards;
-  animation-delay: 0.5s; /* optional delay for dramatic effect */
-
+  animation-delay: 0.5s;
 
   @media (min-width: 768px) {
     font-size: 8.4rem;
   }
 }
 
+/* Navigation */
 .main-nav ul {
   display: flex;
-  font-size: 1.6rem;
   justify-content: center;
   gap: 2rem;
-  list-style: none;
   padding: 1rem 0;
+  list-style: none;
+  font-size: 1.6rem;
 
   @media (min-width: 768px) {
     font-size: 1.8rem;
@@ -76,10 +72,10 @@
 }
 
 .main-nav li a {
-  text-decoration: none;
-  color: white;
+  color: #fff;
   font-weight: bold;
   letter-spacing: 0.05em;
+  text-decoration: none;
   transition: color 0.3s ease;
 }
 
@@ -87,8 +83,9 @@
   color: #f39c12;
 }
 
+/* Additional Sections */
 .more-content {
-  background: #111;
+  background-color: #111;
   color: #eee;
   padding: 4rem 2rem;
 }
