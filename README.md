@@ -1,3 +1,3 @@
-# Johnny Utah webite
+# Johnny Utah Website
 
 More to come later
