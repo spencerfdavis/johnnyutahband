@@ -56,6 +56,18 @@
   }
 }
 
+.social-links {
+  display: flex;
+  gap: 3rem;
+  margin-block: 4rem;
+}
+
+.social-link:hover,
+.social-link:active,
+.social-link:focus {
+  opacity: 0.7;
+}
+
 /* Navigation */
 .main-nav ul {
   display: flex;
