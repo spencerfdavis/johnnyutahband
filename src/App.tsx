@@ -1,4 +1,4 @@
-import { FormEvent, useRef, useState } from 'react'
+import { type FormEvent, useRef, useState } from 'react'
 import './App.css'
 
 import bgVideo from './assets/jubackground.mov'
@@ -52,6 +52,7 @@ function App() {
   const [videoPlaying, setVideoPlaying] = useState(true)
   const [menuOpen, setMenuOpen] = useState(false)
   const [formMessage, setFormMessage] = useState('')
+  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
 
   const toggleVideo = () => {
     const video = videoRef.current
@@ -66,9 +67,39 @@ function App() {
     }
   }
 
-  const previewSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const submitBookingInquiry = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    setFormMessage('Looks good — message delivery will be connected after design approval.')
+    const form = event.currentTarget
+    const formData = new FormData(form)
+
+    setFormStatus('submitting')
+    setFormMessage('Sending your inquiry…')
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.get('name'),
+          email: formData.get('email'),
+          topic: formData.get('topic'),
+          message: formData.get('message'),
+          website: formData.get('website'),
+        }),
+      })
+      const result = await response.json().catch(() => null) as { error?: string } | null
+
+      if (!response.ok) {
+        throw new Error(result?.error || 'We could not send your inquiry. Please try again.')
+      }
+
+      form.reset()
+      setFormStatus('success')
+      setFormMessage('Inquiry sent. We’ll be in touch soon.')
+    } catch (error) {
+      setFormStatus('error')
+      setFormMessage(error instanceof Error ? error.message : 'We could not send your inquiry. Please try again.')
+    }
   }
 
   return (
@@ -276,7 +307,7 @@ function App() {
             </div>
           </div>
 
-          <form className="booking-form" onSubmit={previewSubmit}>
+          <form className="booking-form" onSubmit={submitBookingInquiry}>
             <div className="field-row">
               <label>Name<input name="name" autoComplete="name" required /></label>
               <label>Email<input name="email" type="email" autoComplete="email" required /></label>
@@ -291,8 +322,19 @@ function App() {
               </select>
             </label>
             <label>Message<textarea name="message" rows={5} required /></label>
-            <button className="form-submit" type="submit">Send booking inquiry →</button>
-            {formMessage && <p className="form-message" role="status">{formMessage}</p>}
+            <label className="form-honeypot" aria-hidden="true">
+              Website<input name="website" tabIndex={-1} autoComplete="off" />
+            </label>
+            <button className="form-submit" type="submit" disabled={formStatus === 'submitting'}>
+              {formStatus === 'submitting' ? 'Sending…' : 'Send booking inquiry →'}
+            </button>
+            <p
+              className={`form-message${formStatus === 'error' ? ' is-error' : ''}`}
+              role={formStatus === 'error' ? 'alert' : 'status'}
+              aria-live="polite"
+            >
+              {formMessage}
+            </p>
           </form>
         </div>
       </section>
